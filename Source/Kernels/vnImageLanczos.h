@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -41,27 +40,22 @@
 // Normalized sinc function
 //
 
-inline FLOAT32 vnSinc( FLOAT32 fX )
-{
-    if ( 0.0 == fX ) return 1.0;
+inline FLOAT32 vnSinc(FLOAT32 fX) {
+	if (0.0 == fX) return 1.0;
 
-    return sin( VN_PI * fX ) / ( VN_PI * fX );
+	return sin(VN_PI * fX) / (VN_PI * fX);
 }
 
 //
 // Lanczos weighing function
 //
 
-inline FLOAT32 vnLanczosWeight( FLOAT32 fN, FLOAT32 fDistance )
-{
-    if ( fDistance <= fN )
-    {
-        return vnSinc( fDistance ) * vnSinc( fDistance / fN );                
-    }
+inline FLOAT32 vnLanczosWeight(FLOAT32 fN, FLOAT32 fDistance) {
+	if (fDistance <= fN) { return vnSinc(fDistance) * vnSinc(fDistance / fN); }
 
-    return 0.0f;
+	return 0.0f;
 }
- 
+
 //
 // Lanczos Kernel
 //
@@ -84,11 +78,11 @@ inline FLOAT32 vnLanczosWeight( FLOAT32 fN, FLOAT32 fDistance )
 //   All image formats are supported. 
 //
 
-VN_STATUS vnLanczosKernel( CONST CVImage & pSrcImage, 
-                           FLOAT32 fCoeffN,
-                           FLOAT32 fX, 
-                           FLOAT32 fY,  
-                           UINT8 * pRawOutput );
+VN_STATUS vnLanczosKernel(CONST CVImage& pSrcImage,
+                          FLOAT32 fCoeffN,
+                          FLOAT32 fX,
+                          FLOAT32 fY,
+                          UINT8* pRawOutput);
 
 //
 // Lanczos Kernel
@@ -118,11 +112,11 @@ VN_STATUS vnLanczosKernel( CONST CVImage & pSrcImage,
 //   All image formats are supported. 
 //
 
-VN_STATUS vnLanczosKernel( CONST CVImage & pSrcImage, 
-                           FLOAT32 fCoeffN,
-                           FLOAT32 fX, 
-                           FLOAT32 fY, 
-                           BOOL bDirection, 
-                           UINT8 * pRawOutput );
+VN_STATUS vnLanczosKernel(CONST CVImage& pSrcImage,
+                          FLOAT32 fCoeffN,
+                          FLOAT32 fX,
+                          FLOAT32 fY,
+                          BOOL bDirection,
+                          UINT8* pRawOutput);
 
 #endif // __VN_IMAGE_LANCZOS_H__

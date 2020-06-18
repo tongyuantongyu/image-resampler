@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //

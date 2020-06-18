@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -55,29 +54,48 @@
 //   All image formats are supported. 
 //
 
-inline VN_STATUS vnCloneImage( CONST CVImage & pSrcImage, CVImage * pDestImage )
-{
-    if ( VN_PARAM_CHECK )
-    {
-        if ( VN_IMAGE_FORMAT_NONE == pSrcImage.QueryFormat() || !pDestImage )
-        {
-            return vnPostError( VN_ERROR_INVALIDARG );
-        }
+inline VN_STATUS vnCloneImage(CONST CVImage& pSrcImage, CVImage* pDestImage) {
+	if (VN_PARAM_CHECK) {
+		if (VN_IMAGE_FORMAT_NONE == pSrcImage.QueryFormat() || !pDestImage) {
+			return vnPostError(VN_ERROR_INVALIDARG);
+		}
 
-        if ( &pSrcImage == pDestImage )
-        {
-            return vnPostError( VN_ERROR_INVALIDARG );
-        }
-    }
+		if (&pSrcImage == pDestImage) { return vnPostError(VN_ERROR_INVALIDARG); }
+	}
 
-    if ( VN_FAILED( vnCreateImage( pSrcImage.QueryFormat(), pSrcImage.QueryWidth(), pSrcImage.QueryHeight(), pDestImage ) ) )
-    {
-        return vnPostError( VN_ERROR_EXECUTION_FAILURE );
-    }
+	if (VN_FAILED(
+		vnCreateImage( pSrcImage.QueryFormat(), pSrcImage.QueryWidth(), pSrcImage.QueryHeight(),
+			pDestImage ))) { return vnPostError(VN_ERROR_EXECUTION_FAILURE); }
 
-    memcpy( (pDestImage)->QueryData(), pSrcImage.QueryData(), pSrcImage.SlicePitch() );
+	for (UINT32 line = 0; line < pSrcImage.QueryHeight(); ++line) {
+		memcpy((pDestImage)->QueryData() + pDestImage->BlockOffset(0, line),
+		       pSrcImage.QueryData() + pSrcImage.BlockOffset(0, line),
+		       pSrcImage.RowPitch());
+	}
 
-    return VN_SUCCESS;
+	return VN_SUCCESS;
+}
+
+inline VN_STATUS vnCloneImageData(CONST CVImage& pSrcImage, CONST CVImage& pDestImage) {
+	if (VN_PARAM_CHECK) {
+		if (VN_IMAGE_FORMAT_NONE == pSrcImage.QueryFormat() || pSrcImage.QueryFormat() != pDestImage.QueryFormat()) {
+			return vnPostError(VN_ERROR_INVALIDARG);
+		}
+
+		if (&pSrcImage == &pDestImage) { return vnPostError(VN_ERROR_INVALIDARG); }
+
+		if (pSrcImage.QueryWidth() != pDestImage.QueryWidth() || pSrcImage.QueryHeight() != pDestImage.QueryHeight()) {
+			return vnPostError(VN_ERROR_INVALIDARG);
+		}
+	}
+
+	for (UINT32 line = 0; line < pSrcImage.QueryHeight(); ++line) {
+		memcpy((pDestImage).QueryData() + pDestImage.BlockOffset(0, line),
+		       pSrcImage.QueryData() + pSrcImage.BlockOffset(0, line),
+		       pSrcImage.RowPitch());
+	}
+
+	return VN_SUCCESS;
 }
 
 #endif // __VN_IMAGE_CLONE_H__

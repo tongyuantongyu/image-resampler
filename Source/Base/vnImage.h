@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -36,108 +35,117 @@
 #include "vnBase.h"
 #include "vnMath.h"
 #include "vnImageFormat.h"
+#include "vnExternBitmap.h"
 
 #define VN_IS_IMAGE_VALID(x)                ( VN_IS_FORMAT_VALID((x).QueryFormat()) &&              \
                                               (x).QueryBitsPerPixel()   != 0 &&                     \
                                               (x).QueryWidth()          != 0 &&                     \
                                               (x).QueryHeight()         != 0 )
 
-class CVImage
-{
-    friend VN_STATUS vnCreateImage( VN_IMAGE_FORMAT format, UINT32 uiWidth, UINT32 uiHeight, CVImage * pOutImage );
+class CVImage {
+	friend VN_STATUS vnCreateImage(VN_IMAGE_FORMAT format, UINT32 uiWidth, UINT32 uiHeight,
+	                               CVImage* pOutImage);
 
-    friend VN_STATUS vnDestroyImage( CVImage * pInImage );
+	friend VN_STATUS vnImportImage(Bitmap* bitmap, CVImage* pOutImage);
 
-private:
-
-    VN_IMAGE_FORMAT             m_uiImageFormat;
-
-    //
-    // As a result of the diversity in supported image formats, we treat our 
-    // data set as a collection of blocks, which may either contain one or more 
-    // channels of color, or otherwise encoded information.
-    //
-    // When speaking logically about the image however, we operate in terms of pixels.
-    //
-
-    UINT32                      m_uiWidthInPixels;
-    UINT32                      m_uiHeightInPixels;
-    UINT32                      m_uiBitsPerPixel;
-    UINT8                       m_uiChannelCount;
-    UINT8 *                     m_pbyDataBuffer;
-    UINT32                      m_uiDataCapacity;
+	friend VN_STATUS vnDestroyImage(CVImage* pInImage);
 
 private:
 
-    //
-    // Allocation management
-    //
+	VN_IMAGE_FORMAT m_uiImageFormat;
 
-    VN_STATUS                   Allocate( UINT32 uiSize );
-    VN_STATUS                   Deallocate();
+	//
+	// As a result of the diversity in supported image formats, we treat our 
+	// data set as a collection of blocks, which may either contain one or more 
+	// channels of color, or otherwise encoded information.
+	//
+	// When speaking logically about the image however, we operate in terms of pixels.
+	//
 
-    //
-    // A CVImage is considered uninitialized if its m_uiRTTI field is set to zero
-    // (no format). Images must have an empty data buffer in this scenario.
-    //
+	UINT32 m_uiWidthInPixels;
+	UINT32 m_uiHeightInPixels;
+	UINT32 m_uiBitsPerPixel;
+	UINT32 m_uiStrideLength;
+	UINT8 m_uiChannelCount;
+	UINT8* m_pbyDataBuffer;
+	UINT32 m_uiDataCapacity;
 
-    VN_STATUS                   SetFormat( VN_IMAGE_FORMAT format );
+private:
 
-    //
-    // SetDimension will automatically manage the memory of the object. This is the 
-    // primary interface that should be used for reserving memory for the image. Note
-    // that the image must contain a valid format prior to calling SetDimension.
-    //
-   
-    VN_STATUS                   SetDimension( UINT32 uiNewWidth, UINT32 uiNewHeight );
+	//
+	// Allocation management
+	//
+
+	VN_STATUS Allocate(UINT32 uiSize);
+	VN_STATUS Deallocate();
+
+	//
+	// A CVImage is considered uninitialized if its m_uiRTTI field is set to zero
+	// (no format). Images must have an empty data buffer in this scenario.
+	//
+
+	VN_STATUS SetFormat(VN_IMAGE_FORMAT format);
+
+	//
+	// SetDimension will automatically manage the memory of the object. This is the 
+	// primary interface that should be used for reserving memory for the image. Note
+	// that the image must contain a valid format prior to calling SetDimension.
+	//
+
+	VN_STATUS SetDimension(UINT32 uiNewWidth, UINT32 uiNewHeight);
+
+	VN_STATUS JustSetDimension(UINT32 uiNewWidth, UINT32 uiNewHeight);
 
 public:
 
-    CVImage();				
-    virtual ~CVImage();	
+	CVImage();
+	virtual ~CVImage();
 
-    //
-    // Query interfaces
-    //
+	//
+	// Query interfaces
+	//
 
-    UINT32                      QueryWidth() CONST;            // the width of the image in pixels
-    UINT32                      QueryHeight() CONST;           // the height of the image in pixels    
-    UINT8 *                     QueryData() CONST;             // base pointer of the image data   
-    UINT8                       QueryBitsPerPixel() CONST;     // channel-specific block size    
-    UINT8                       QueryChannelCount() CONST;     // number of valid channels 
-    VN_IMAGE_FORMAT             QueryFormat() CONST;
+	UINT32 QueryWidth() CONST { return m_uiWidthInPixels; }; // the width of the image in pixels
+	UINT32 QueryHeight() CONST { return m_uiHeightInPixels; }; // the height of the image in pixels
+	UINT32 QueryStride() CONST { return m_uiStrideLength; };
+	UINT8* QueryData() CONST { return m_pbyDataBuffer; }; // base pointer of the image data   
+	UINT8 QueryBitsPerPixel() CONST { return m_uiBitsPerPixel; }; // channel-specific block size    
+	UINT8 QueryChannelCount() CONST { return m_uiChannelCount; }; // number of valid channels 
+	VN_IMAGE_FORMAT QueryFormat() CONST { return m_uiImageFormat; };
 
 public:
 
-    //
-    // Row Pitch
-    //
-    // RowPitch is the byte delta between two adjacent rows of pixels in the image.
-    // This function takes alignment into consideration and may provide a value that
-    // is greater than the byte width of the visible image. 
-    //
+	//
+	// Row Pitch
+	//
+	// RowPitch is the byte delta between two adjacent rows of pixels in the image.
+	// This function takes alignment into consideration and may provide a value that
+	// is greater than the byte width of the visible image. 
+	//
 
-    UINT32                      RowPitch() CONST;
-    
-    //
-    // Slice Pitch
-    //
-    // SlicePitch is the byte size of the entire image. This size may extend beyond the
-    // edge of the last row and column of the image, due to alignment and tiling 
-    // requirements on certain platforms.
-    //
+	UINT32 RowPitch() CONST { return (m_uiWidthInPixels * m_uiBitsPerPixel) >> 3; }
 
-    UINT32                      SlicePitch() CONST;
+	//
+	// Slice Pitch
+	//
+	// SlicePitch is the byte size of the entire image. This size may extend beyond the
+	// edge of the last row and column of the image, due to alignment and tiling 
+	// requirements on certain platforms.
+	//
 
-    //
-    // Block Offset
-    //
-    // Block offset returns the byte offset from the start of the image to pixel (i,j).
-    // Formats are required to use byte aligned pixel rates, so this function will always
-    // point to the start of a pixel block.
-    //
+	UINT32 SlicePitch() CONST { return m_uiDataCapacity; };
 
-    UINT32                      BlockOffset( UINT32 i, UINT32 j ) CONST;
+	//
+	// Block Offset
+	//
+	// Block offset returns the byte offset from the start of the image to pixel (i,j).
+	// Formats are required to use byte aligned pixel rates, so this function will always
+	// point to the start of a pixel block.
+	//
+
+	UINT32 BlockOffset(CONST UINT32 i, CONST UINT32 j) CONST {
+		return (m_uiStrideLength * j) + ((i * m_uiBitsPerPixel) >> 3);
+	};
 };
 
 //
@@ -147,7 +155,10 @@ public:
 // to guarantee that image creation is high-level atomic.
 //
 
-VN_STATUS vnCreateImage( VN_IMAGE_FORMAT format, UINT32 uiWidth, UINT32 uiHeight, CVImage * pOutImage );
+VN_STATUS vnCreateImage(VN_IMAGE_FORMAT format, UINT32 uiWidth, UINT32 uiHeight,
+                        CVImage* pOutImage);
+
+VN_STATUS vnImportImage(Bitmap* bitmap, CVImage* pOutImage);
 
 //
 // CVImage Destructor
@@ -156,6 +167,6 @@ VN_STATUS vnCreateImage( VN_IMAGE_FORMAT format, UINT32 uiWidth, UINT32 uiHeight
 // 'destructor' to allow for future internal memory management.
 //
 
-VN_STATUS vnDestroyImage( CVImage * pInImage );
+VN_STATUS vnDestroyImage(CVImage* pInImage);
 
 #endif // __VN_IMAGE_H__

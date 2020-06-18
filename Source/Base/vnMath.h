@@ -1,4 +1,3 @@
-
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
 // vnMath.h
@@ -56,105 +55,76 @@
 #define VN_MIN3( a, b, c )     ((c) < (a) ? ((c) < (b) ? (c) : (b)) : (a) < (b) ? (a) : (b))
 #define VN_MAX3( a, b, c )     ((c) > (a) ? ((c) > (b) ? (c) : (b)) : (a) > (b) ? (a) : (b))
 
-inline FLOAT32 vnClipRange( FLOAT32 fInput, FLOAT32 fLow, FLOAT32 fHigh )
-{
-    if ( fInput < fLow ) fInput = fLow;
-    else if ( fInput > fHigh ) fInput = fHigh;
-    return fInput;
+inline FLOAT32 vnClipRange(FLOAT32 fInput, FLOAT32 fLow, FLOAT32 fHigh) {
+	if (fInput < fLow) fInput = fLow;
+	else if (fInput > fHigh) fInput = fHigh;
+	return fInput;
 }
 
-inline INT32 vnClipRange( INT32 iInput, INT32 iLow, INT32 iHigh )
-{
-    if ( iInput < iLow ) iInput = iLow;
-    else if ( iInput > iHigh ) iInput = iHigh;
-    return iInput;
+inline INT32 vnClipRange(INT32 iInput, INT32 iLow, INT32 iHigh) {
+	if (iInput < iLow) iInput = iLow;
+	else if (iInput > iHigh) iInput = iHigh;
+	return iInput;
 }
 
-inline FLOAT64 vnClipRange64( FLOAT64 fInput, FLOAT64 fLow, FLOAT64 fHigh )
-{
-    if ( fInput < fLow ) fInput = fLow;
-    else if ( fInput > fHigh ) fInput = fHigh;
-    return fInput;
+inline FLOAT64 vnClipRange64(FLOAT64 fInput, FLOAT64 fLow, FLOAT64 fHigh) {
+	if (fInput < fLow) fInput = fLow;
+	else if (fInput > fHigh) fInput = fHigh;
+	return fInput;
 }
 
-inline INT64 vnClipRange64( INT64 iInput, INT64 iLow, INT64 iHigh )
-{
-    if ( iInput < iLow ) iInput = iLow;
-    else if ( iInput > iHigh ) iInput = iHigh;
-    return iInput;
+inline INT64 vnClipRange64(INT64 iInput, INT64 iLow, INT64 iHigh) {
+	if (iInput < iLow) iInput = iLow;
+	else if (iInput > iHigh) iInput = iHigh;
+	return iInput;
 }
 
-inline FLOAT32 vnSaturate( FLOAT32 fInput )
-{
-    return vnClipRange( fInput, 0.0f, 1.0f );
+inline FLOAT32 vnSaturate(FLOAT32 fInput) { return vnClipRange(fInput, 0.0f, 1.0f); }
+
+inline INT32 vnSaturate(INT32 iInput) { return vnClipRange(iInput, 0, 255); }
+
+inline BOOL vnIsPow2(UINT32 uiValue) { return (0 == (uiValue & (uiValue - 1))); }
+
+inline FLOAT32 vnGreaterMultiple(FLOAT32 fValue, FLOAT32 fMultiple) {
+	FLOAT32 mod = fmod(fValue, fMultiple);
+
+	if (mod != 0.0f) { fValue += (fMultiple - mod); }
+
+	return fValue;
 }
 
-inline INT32 vnSaturate( INT32 iInput )
-{
-    return vnClipRange( iInput, 0, 255 );
+inline UINT32 vnGreaterMultiple(UINT32 uiValue, UINT32 uiMultiple) {
+	UINT32 mod = uiValue % uiMultiple;
+
+	if (0 != mod) { uiValue += (uiMultiple - mod); }
+
+	return uiValue;
 }
 
-inline BOOL vnIsPow2( UINT32 uiValue )
-{
-    return ( 0 == ( uiValue & ( uiValue - 1 ) ) );
+inline UINT32 vnAlign(UINT32 uiValue, UINT32 uiAlignment) {
+	return vnGreaterMultiple(uiValue, uiAlignment);
 }
 
-inline FLOAT32 vnGreaterMultiple( FLOAT32 fValue, FLOAT32 fMultiple )
-{
-    FLOAT32 mod = fmod( fValue, fMultiple );
-    
-    if ( mod != 0.0f )
-    {
-        fValue += ( fMultiple - mod );
-    }
-    
-    return fValue;
+inline UINT32 vnAlign16(UINT32 uiValue) {
+	return (uiValue & 0xF ? uiValue + ~(uiValue & 0xF) + 1 : uiValue);
 }
 
-inline UINT32 vnGreaterMultiple( UINT32 uiValue, UINT32 uiMultiple )
-{
-    UINT32 mod = uiValue % uiMultiple;
-    
-    if ( 0 != mod )
-    {
-        uiValue += ( uiMultiple - mod );
-    }
-    
-    return uiValue;
+inline UINT32 vnAlign8(UINT32 uiValue) {
+	return (uiValue & 0x7 ? uiValue + ~(uiValue & 0x7) + 1 : uiValue);
 }
 
-inline UINT32 vnAlign( UINT32 uiValue, UINT32 uiAlignment )
-{
-    return vnGreaterMultiple( uiValue, uiAlignment );
-}
+inline UINT32 vnAlign2(UINT32 uiValue) {
+	if (vnIsPow2(uiValue)) { return uiValue; }
 
-inline UINT32 vnAlign16( UINT32 uiValue )
-{
-    return ( uiValue & 0xF ? uiValue + ~( uiValue & 0xF ) + 1 : uiValue );
-}
+	INT32 iPower = 0;
 
-inline UINT32 vnAlign8( UINT32 uiValue )
-{
-    return ( uiValue & 0x7 ? uiValue + ~( uiValue & 0x7 ) + 1 : uiValue );
-}
+	while (uiValue) {
+		uiValue >>= 1;
 
-inline UINT32 vnAlign2( UINT32 uiValue )
-{
-    if ( vnIsPow2( uiValue ) )
-    {
-        return uiValue;
-    }
-    
-    INT32 iPower = 0;
-    
-    while ( uiValue ) 
-    {
-        uiValue >>= 1;
-        
-        iPower++;
-    }
-    
-    return 1 << iPower;
+		iPower++;
+	}
+
+	return 1 << iPower;
 }
 
 #endif // __VN_MATH_H__

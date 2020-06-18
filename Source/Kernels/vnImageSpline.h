@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -41,39 +40,36 @@
 // Spline weighing function
 //
 
-inline FLOAT32 vnSplineWeight( FLOAT32 fDistance )
-{
-    //
-    // Our bicubic function is designed to provide feedback over a radius of 2.0 pixels.
-    //
+inline FLOAT32 vnSplineWeight(FLOAT32 fDistance) {
+	//
+	// Our bicubic function is designed to provide feedback over a radius of 2.0 pixels.
+	//
 
-    FLOAT32 fRange  = fDistance;
-    FLOAT32 fResult = 0.0;
+	FLOAT32 fRange = fDistance;
+	FLOAT32 fResult = 0.0;
 
-    if ( fRange < 1.0 )
-    {
-        FLOAT32 fCubicTerm = ( 1.5f ) * ( fRange * fRange * fRange );
-        FLOAT32 fQuadTerm  = ( -2.5f ) * ( fRange * fRange );
-        FLOAT32 fConstTerm = ( 1.0f );
+	if (fRange < 1.0) {
+		FLOAT32 fCubicTerm = (1.5f) * (fRange * fRange * fRange);
+		FLOAT32 fQuadTerm = (-2.5f) * (fRange * fRange);
+		FLOAT32 fConstTerm = (1.0f);
 
-        fResult = ( fCubicTerm + fQuadTerm + fConstTerm );                
-    }
+		fResult = (fCubicTerm + fQuadTerm + fConstTerm);
+	}
 
-    else if ( fRange >= 1.0 && fRange < 2.0 )
-    {
-        FLOAT32 fCubicTerm = ( -0.5f ) * ( fRange * fRange * fRange );
-        FLOAT32 fQuadTerm  = ( 2.5f ) * ( fRange * fRange );
-        FLOAT32 fLinTerm   = ( 4.0f ) * ( fRange );
-        FLOAT32 fConstTerm = ( 2.0f );
+	else if (fRange >= 1.0 && fRange < 2.0) {
+		FLOAT32 fCubicTerm = (-0.5f) * (fRange * fRange * fRange);
+		FLOAT32 fQuadTerm = (2.5f) * (fRange * fRange);
+		FLOAT32 fLinTerm = (4.0f) * (fRange);
+		FLOAT32 fConstTerm = (2.0f);
 
-        fResult = ( fCubicTerm + fQuadTerm + fLinTerm + fConstTerm );    
-    }
+		fResult = (fCubicTerm + fQuadTerm + fLinTerm + fConstTerm);
+	}
 
-    if ( fResult < 0 ) fResult = 0.0;
+	if (fResult < 0) fResult = 0.0;
 
-    return fResult;
+	return fResult;
 }
- 
+
 //
 // Bicubic Spline Kernel
 //
@@ -95,10 +91,10 @@ inline FLOAT32 vnSplineWeight( FLOAT32 fDistance )
 //   All image formats are supported. 
 //
 
-VN_STATUS vnSplineKernel( CONST CVImage & pSrcImage, 
-                          FLOAT32 fX, 
-                          FLOAT32 fY,  
-                          UINT8 * pRawOutput );
+VN_STATUS vnSplineKernel(CONST CVImage& pSrcImage,
+                         FLOAT32 fX,
+                         FLOAT32 fY,
+                         UINT8* pRawOutput);
 
 //
 // Bicubic Spline Kernel
@@ -127,10 +123,10 @@ VN_STATUS vnSplineKernel( CONST CVImage & pSrcImage,
 //   All image formats are supported. 
 //
 
-VN_STATUS vnSplineKernel( CONST CVImage & pSrcImage, 
-                          FLOAT32 fX, 
-                          FLOAT32 fY, 
-                          BOOL bDirection, 
-                          UINT8 * pRawOutput );
+VN_STATUS vnSplineKernel(CONST CVImage& pSrcImage,
+                         FLOAT32 fX,
+                         FLOAT32 fY,
+                         BOOL bDirection,
+                         UINT8* pRawOutput);
 
 #endif // __VN_IMAGE_BICUBIC_SPLINE_H__

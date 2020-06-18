@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -62,6 +61,7 @@
 //   All image formats are supported. 
 //
 
-VN_STATUS vnScaleImage( CONST CVImage & pSrcImage, UINT32 uiWidth, UINT32 uiHeight, CVImage * pDestImage );
+VN_STATUS vnScaleImage(CONST CVImage& pSrcImage, UINT32 uiWidth, UINT32 uiHeight,
+                       CVImage* pDestImage);
 
 #endif // __VN_IMAGE_SCALE_H__

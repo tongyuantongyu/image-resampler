@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -95,48 +94,64 @@
 //           information for selecting a particular filter for an operation.
 //
 
-enum VN_IMAGE_KERNEL_TYPE
-{
-    //
-    // Linear family
-    //
+enum VN_IMAGE_KERNEL_TYPE {
+	//
+	// Linear family
+	//
 
-    VN_IMAGE_KERNEL_NEAREST          = VN_IMAGE_MAKE_KERNEL( 1, 0 ),    // nearest neighbor
-    VN_IMAGE_KERNEL_AVERAGE          = VN_IMAGE_MAKE_KERNEL( 1, 1 ),    // simple averaging over the kernel space
-    VN_IMAGE_KERNEL_BILINEAR         = VN_IMAGE_MAKE_KERNEL( 1, 2 ),    // bilinear interpolation
+	VN_IMAGE_KERNEL_NEAREST = VN_IMAGE_MAKE_KERNEL(1, 0),
+	// nearest neighbor
+	VN_IMAGE_KERNEL_AVERAGE = VN_IMAGE_MAKE_KERNEL(1, 1),
+	// simple averaging over the kernel space
+	VN_IMAGE_KERNEL_BILINEAR = VN_IMAGE_MAKE_KERNEL(1, 2),
+	// bilinear interpolation
 
-    //
-    // Mitchell-Netravali Cubic family
-    //
+	//
+	// Mitchell-Netravali Cubic family
+	//
 
-    VN_IMAGE_KERNEL_BICUBIC          = VN_IMAGE_MAKE_KERNEL( 1, 4 ),    // generic bicubic kernel
-    VN_IMAGE_KERNEL_CATMULL          = VN_IMAGE_MAKE_KERNEL( 1, 5 ),    // Catmull-Rom spline, popularized by GIMP
-    VN_IMAGE_KERNEL_MITCHELL         = VN_IMAGE_MAKE_KERNEL( 1, 6 ),    // cubic mitchell-netravali kernel
-    VN_IMAGE_KERNEL_CARDINAL         = VN_IMAGE_MAKE_KERNEL( 1, 7 ),    // cubic, popularized by Adobe Photoshop
-    VN_IMAGE_KERNEL_SPLINE           = VN_IMAGE_MAKE_KERNEL( 0, 8 ),    // cubic spline
-    VN_IMAGE_KERNEL_BSPLINE          = VN_IMAGE_MAKE_KERNEL( 1, 9 ),    // cubic b-spline, popularized by Paint.NET
+	VN_IMAGE_KERNEL_BICUBIC = VN_IMAGE_MAKE_KERNEL(1, 4),
+	// generic bicubic kernel
+	VN_IMAGE_KERNEL_CATMULL = VN_IMAGE_MAKE_KERNEL(1, 5),
+	// Catmull-Rom spline, popularized by GIMP
+	VN_IMAGE_KERNEL_MITCHELL = VN_IMAGE_MAKE_KERNEL(1, 6),
+	// cubic mitchell-netravali kernel
+	VN_IMAGE_KERNEL_CARDINAL = VN_IMAGE_MAKE_KERNEL(1, 7),
+	// cubic, popularized by Adobe Photoshop
+	VN_IMAGE_KERNEL_SPLINE = VN_IMAGE_MAKE_KERNEL(0, 8),
+	// cubic spline
+	VN_IMAGE_KERNEL_BSPLINE = VN_IMAGE_MAKE_KERNEL(1, 9),
+	// cubic b-spline, popularized by Paint.NET
 
-    //
-    // Non-separable cubic family
-    //
+	//
+	// Non-separable cubic family
+	//
 
-    VN_IMAGE_KERNEL_LANCZOS          = VN_IMAGE_MAKE_KERNEL( 0, 10 ),   // lanczos-1
-    VN_IMAGE_KERNEL_LANCZOS2         = VN_IMAGE_MAKE_KERNEL( 0, 11 ),   // lanczos-2
-    VN_IMAGE_KERNEL_LANCZOS3         = VN_IMAGE_MAKE_KERNEL( 0, 12 ),   // lanczos-3
-    VN_IMAGE_KERNEL_LANCZOS4         = VN_IMAGE_MAKE_KERNEL( 0, 13 ),   // lanczos-4
-    VN_IMAGE_KERNEL_LANCZOS5         = VN_IMAGE_MAKE_KERNEL( 0, 14 ),   // lanczos-5
-    
-    //
-    // Distribution family
-    //
+	VN_IMAGE_KERNEL_LANCZOS = VN_IMAGE_MAKE_KERNEL(0, 10),
+	// lanczos-1
+	VN_IMAGE_KERNEL_LANCZOS2 = VN_IMAGE_MAKE_KERNEL(0, 11),
+	// lanczos-2
+	VN_IMAGE_KERNEL_LANCZOS3 = VN_IMAGE_MAKE_KERNEL(0, 12),
+	// lanczos-3
+	VN_IMAGE_KERNEL_LANCZOS4 = VN_IMAGE_MAKE_KERNEL(0, 13),
+	// lanczos-4
+	VN_IMAGE_KERNEL_LANCZOS5 = VN_IMAGE_MAKE_KERNEL(0, 14),
+	// lanczos-5
 
-    VN_IMAGE_KERNEL_BOKEH            = VN_IMAGE_MAKE_KERNEL( 0, 15 ),   // bokeh
-    VN_IMAGE_KERNEL_GAUSSIAN         = VN_IMAGE_MAKE_KERNEL( 1, 16 ),   // gaussian interpolation
-    VN_IMAGE_KERNEL_COVERAGE         = VN_IMAGE_MAKE_KERNEL( 1, 17 ),   // coverage kernel
+	//
+	// Distribution family
+	//
 
-    // ...
+	VN_IMAGE_KERNEL_BOKEH = VN_IMAGE_MAKE_KERNEL(0, 15),
+	// bokeh
+	VN_IMAGE_KERNEL_GAUSSIAN = VN_IMAGE_MAKE_KERNEL(1, 16),
+	// gaussian interpolation
+	VN_IMAGE_KERNEL_COVERAGE = VN_IMAGE_MAKE_KERNEL(1, 17),
+	// coverage kernel
 
-    VN_IMAGE_KERNEL_TYPE_DWORD        = 0x7FFFFFFF
+	// ...
+
+	VN_IMAGE_KERNEL_TYPE_DWORD = 0x7FFFFFFF
 };
 
 //
@@ -148,15 +163,14 @@ enum VN_IMAGE_KERNEL_TYPE
 //   interface.
 //
 
-enum VN_IMAGE_KERNEL_DIRECTION
-{
-    VN_IMAGE_KERNEL_1D_HORIZONTAL       = 0x0,
-    VN_IMAGE_KERNEL_1D_VERTICAL,
-    VN_IMAGE_KERNEL_2D_COMBINED,
+enum VN_IMAGE_KERNEL_DIRECTION {
+	VN_IMAGE_KERNEL_1D_HORIZONTAL = 0x0,
+	VN_IMAGE_KERNEL_1D_VERTICAL,
+	VN_IMAGE_KERNEL_2D_COMBINED,
 
-    // ...
+	// ...
 
-    VN_IMAGE_KERNEL_DIRECTION_WORD      = 0x7FFF
+	VN_IMAGE_KERNEL_DIRECTION_WORD = 0x7FFF
 };
 
 //
@@ -168,25 +182,21 @@ enum VN_IMAGE_KERNEL_DIRECTION
 // around to the other side of the image.
 //
 
-enum VN_IMAGE_KERNEL_EDGEMODE
-{
-    VN_IMAGE_KERNEL_EDGE_WRAP           = 0x0,
-    VN_IMAGE_KERNEL_EDGE_CLAMP,
-    VN_IMAGE_KERNEL_EDGE_REFLECT,
+enum VN_IMAGE_KERNEL_EDGEMODE {
+	VN_IMAGE_KERNEL_EDGE_WRAP = 0x0,
+	VN_IMAGE_KERNEL_EDGE_CLAMP,
+	VN_IMAGE_KERNEL_EDGE_REFLECT,
 
-    // ...
+	// ...
 
-    VN_IMAGE_KERNEL_EDGEMODE_WORD       = 0x7FFF
+	VN_IMAGE_KERNEL_EDGEMODE_WORD = 0x7FFF
 };
 
 //
 // Simple helper utility to check if a kernel is separable.
 //
 
-inline BOOL vnIsSeparableKernel( VN_IMAGE_KERNEL_TYPE uiKernel )
-{
-    return !!( 0x80000000 & uiKernel );
-}
+inline BOOL vnIsSeparableKernel(VN_IMAGE_KERNEL_TYPE uiKernel) { return !!(0x80000000 & uiKernel); }
 
 //
 // SampleImage 
@@ -220,12 +230,12 @@ inline BOOL vnIsSeparableKernel( VN_IMAGE_KERNEL_TYPE uiKernel )
 //   All image formats are supported. 
 //
 
-VN_STATUS vnSampleImage( CONST CVImage & pSrcImage, 
-                         VN_IMAGE_KERNEL_TYPE uiKernel, 
-                         VN_IMAGE_KERNEL_DIRECTION uiDirection, 
-                         FLOAT32 fX, 
-                         FLOAT32 fY, 
-                         FLOAT32 fRadius,
-                         UINT8 * pRawOutput );
+VN_STATUS vnSampleImage(CONST CVImage& pSrcImage,
+                        VN_IMAGE_KERNEL_TYPE uiKernel,
+                        VN_IMAGE_KERNEL_DIRECTION uiDirection,
+                        FLOAT32 fX,
+                        FLOAT32 fY,
+                        FLOAT32 fRadius,
+                        UINT8* pRawOutput);
 
 #endif // __VN_IMAGE_SAMPLE_H__

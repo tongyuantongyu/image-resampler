@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -47,39 +46,36 @@
 //   weight function to generate the majority of our bicubic kernels.
 //
 
-inline FLOAT32 vnBicubicWeight( FLOAT32 fB, FLOAT32 fC, FLOAT32 fDistance )
-{
-    //
-    // Our bicubic function is designed to provide feedback over a radius of 2.0 pixels.
-    //
+inline FLOAT32 vnBicubicWeight(FLOAT32 fB, FLOAT32 fC, FLOAT32 fDistance) {
+	//
+	// Our bicubic function is designed to provide feedback over a radius of 2.0 pixels.
+	//
 
-    FLOAT32 fRange  = fDistance;
-    FLOAT32 fResult = 0.0;
+	FLOAT32 fRange = fDistance;
+	FLOAT32 fResult = 0.0;
 
-    if ( fRange < 1.0 )
-    {
-        FLOAT32 fCubicTerm = ( 12.0 - 9.0 * fB - 6.0 * fC ) * ( fRange * fRange * fRange );
-        FLOAT32 fQuadTerm  = ( -18.0 + 12.0 * fB + 6.0 * fC ) * ( fRange * fRange );
-        FLOAT32 fConstTerm = ( 6.0 - 2.0 * fB );
+	if (fRange < 1.0) {
+		FLOAT32 fCubicTerm = (12.0 - 9.0 * fB - 6.0 * fC) * (fRange * fRange * fRange);
+		FLOAT32 fQuadTerm = (-18.0 + 12.0 * fB + 6.0 * fC) * (fRange * fRange);
+		FLOAT32 fConstTerm = (6.0 - 2.0 * fB);
 
-        fResult = ( 1.0f / 6.0f ) * ( fCubicTerm + fQuadTerm + fConstTerm );                
-    }
+		fResult = (1.0f / 6.0f) * (fCubicTerm + fQuadTerm + fConstTerm);
+	}
 
-    else if ( fRange >= 1.0 && fRange < 2.0 )
-    {
-        FLOAT32 fCubicTerm = ( -fB - 6.0 * fC ) * ( fRange * fRange * fRange );
-        FLOAT32 fQuadTerm  = ( 6.0 * fB + 30.0 * fC ) * ( fRange * fRange );
-        FLOAT32 fLinTerm   = ( -12.0 * fB - 48.0 * fC ) * ( fRange );
-        FLOAT32 fConstTerm = ( 8.0 * fB + 24.0 * fC );
+	else if (fRange >= 1.0 && fRange < 2.0) {
+		FLOAT32 fCubicTerm = (-fB - 6.0 * fC) * (fRange * fRange * fRange);
+		FLOAT32 fQuadTerm = (6.0 * fB + 30.0 * fC) * (fRange * fRange);
+		FLOAT32 fLinTerm = (-12.0 * fB - 48.0 * fC) * (fRange);
+		FLOAT32 fConstTerm = (8.0 * fB + 24.0 * fC);
 
-        fResult = ( 1.0f / 6.0f ) * ( fCubicTerm + fQuadTerm + fLinTerm + fConstTerm );    
-    }
+		fResult = (1.0f / 6.0f) * (fCubicTerm + fQuadTerm + fLinTerm + fConstTerm);
+	}
 
-    if ( fResult < 0 ) fResult = 0.0;
+	if (fResult < 0) fResult = 0.0;
 
-    return fResult;
+	return fResult;
 }
- 
+
 //
 // Bicubic Kernel
 //
@@ -105,12 +101,12 @@ inline FLOAT32 vnBicubicWeight( FLOAT32 fB, FLOAT32 fC, FLOAT32 fDistance )
 //   All image formats are supported. 
 //
 
-VN_STATUS vnBicubicKernel( CONST CVImage & pSrcImage, 
-                           FLOAT32 fCoeffB,
-                           FLOAT32 fCoeffC,
-                           FLOAT32 fX, 
-                           FLOAT32 fY,  
-                           UINT8 * pRawOutput );
+VN_STATUS vnBicubicKernel(CONST CVImage& pSrcImage,
+                          FLOAT32 fCoeffB,
+                          FLOAT32 fCoeffC,
+                          FLOAT32 fX,
+                          FLOAT32 fY,
+                          UINT8* pRawOutput);
 
 //
 // Bicubic Kernel
@@ -143,12 +139,12 @@ VN_STATUS vnBicubicKernel( CONST CVImage & pSrcImage,
 //   All image formats are supported. 
 //
 
-VN_STATUS vnBicubicKernel( CONST CVImage & pSrcImage, 
-                           FLOAT32 fCoeffB,
-                           FLOAT32 fCoeffC,
-                           FLOAT32 fX, 
-                           FLOAT32 fY, 
-                           BOOL bDirection, 
-                           UINT8 * pRawOutput );
+VN_STATUS vnBicubicKernel(CONST CVImage& pSrcImage,
+                          FLOAT32 fCoeffB,
+                          FLOAT32 fCoeffC,
+                          FLOAT32 fX,
+                          FLOAT32 fY,
+                          BOOL bDirection,
+                          UINT8* pRawOutput);
 
 #endif // __VN_IMAGE_BICUBIC_H__

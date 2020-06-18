@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -58,7 +57,7 @@
 //   All image formats are supported. 
 //
 
-VN_STATUS vnBilinearKernel( CONST CVImage & pSrcImage, FLOAT32 fX, FLOAT32 fY, UINT8 * pRawOutput );
+VN_STATUS vnBilinearKernel(CONST CVImage& pSrcImage, FLOAT32 fX, FLOAT32 fY, UINT8* pRawOutput);
 
 //
 // Bilinear Kernel
@@ -87,6 +86,7 @@ VN_STATUS vnBilinearKernel( CONST CVImage & pSrcImage, FLOAT32 fX, FLOAT32 fY, U
 //   All image formats are supported. 
 //
 
-VN_STATUS vnBilinearKernel( CONST CVImage & pSrcImage, FLOAT32 fX, FLOAT32 fY, BOOL bDirection, UINT8 * pRawOutput );
+VN_STATUS vnBilinearKernel(CONST CVImage& pSrcImage, FLOAT32 fX, FLOAT32 fY, BOOL bDirection,
+                           UINT8* pRawOutput);
 
 #endif // __VN_BILINEAR_H__

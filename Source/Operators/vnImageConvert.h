@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -56,6 +55,6 @@
 //   All image formats are supported. 
 //
 
-VN_STATUS vnConvertImage( CONST CVImage & pSrcImage, VN_IMAGE_FORMAT destFormat, CVImage * pDestImage );
+VN_STATUS vnConvertImage(CONST CVImage& pSrcImage, VN_IMAGE_FORMAT destFormat, CVImage* pDestImage);
 
 #endif // __VN_IMAGE_CONVERT_H__

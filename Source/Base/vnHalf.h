@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -108,42 +107,41 @@
 //           As a result, we do not provide any arithmetic operators.
 //
 
-class FLOAT16
-{
-    UINT16 m_uiFormat;
+class FLOAT16 {
+	UINT16 m_uiFormat;
 
 public:
 
-    FLOAT16();
-    FLOAT16( CONST FLOAT16 & rhs );
-    FLOAT16( CONST FLOAT32 & rhs );
-    ~FLOAT16();
+	FLOAT16();
+	FLOAT16(CONST FLOAT16& rhs);
+	FLOAT16(CONST FLOAT32& rhs);
+	~FLOAT16();
 
-    //
-    // Member operations
-    //
+	//
+	// Member operations
+	//
 
-    BOOL operator == ( CONST FLOAT16 & rhs );
-    BOOL operator != ( CONST FLOAT16 & rhs );
+	BOOL operator ==(CONST FLOAT16& rhs);
+	BOOL operator !=(CONST FLOAT16& rhs);
 
-    FLOAT16 & operator = ( CONST FLOAT16 & rhs );
-    FLOAT16 & operator = ( CONST FLOAT32 & rhs );
+	FLOAT16& operator =(CONST FLOAT16& rhs);
+	FLOAT16& operator =(CONST FLOAT32& rhs);
 
-    //
-    // Conversions -- note that we purposely avoid cast operators
-    //
+	//
+	// Conversions -- note that we purposely avoid cast operators
+	//
 
-    static FLOAT32 ToFloat32( FLOAT16 rhs );
-    static FLOAT16 ToFloat16( FLOAT32 rhs );    
+	static FLOAT32 ToFloat32(FLOAT16 rhs);
+	static FLOAT16 ToFloat16(FLOAT32 rhs);
 
-    //
-    // The fast variants handle only the most common normalized conversion case.
-    // If a conversion requires QNaN, SNaN, Inf, or denormalized handling, do not
-    // use these.
-    //
+	//
+	// The fast variants handle only the most common normalized conversion case.
+	// If a conversion requires QNaN, SNaN, Inf, or denormalized handling, do not
+	// use these.
+	//
 
-    static FLOAT32 ToFloat32Fast( FLOAT16 rhs );
-    static FLOAT16 ToFloat16Fast( FLOAT32 rhs );    
+	static FLOAT32 ToFloat32Fast(FLOAT16 rhs);
+	static FLOAT16 ToFloat16Fast(FLOAT32 rhs);
 };
 
 #endif // __VN_HALF_H__

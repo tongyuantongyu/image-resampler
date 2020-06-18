@@ -95,6 +95,9 @@
     <ClInclude Include="..\Source\vnImagine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Base\vnExternBitmap.h">
+      <Filter>Header Files\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Base\vnHalf.cpp">
@@ -148,7 +151,7 @@
     <ClCompile Include="..\Source\Kernels\vnImageCoverage.cpp">
       <Filter>Source Files\Kernels</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Tutorial.cpp">
+    <ClCompile Include="..\Source\dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

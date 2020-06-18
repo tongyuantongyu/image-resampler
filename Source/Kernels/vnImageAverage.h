@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -60,7 +59,8 @@
 //   All image formats are supported. 
 //
 
-VN_STATUS vnAverageKernel( CONST CVImage & pSrcImage, FLOAT32 fX, FLOAT32 fY, FLOAT32 fRadius, UINT8 * pRawOutput );
+VN_STATUS vnAverageKernel(CONST CVImage& pSrcImage, FLOAT32 fX, FLOAT32 fY, FLOAT32 fRadius,
+                          UINT8* pRawOutput);
 
 //
 // Average Kernel
@@ -91,6 +91,7 @@ VN_STATUS vnAverageKernel( CONST CVImage & pSrcImage, FLOAT32 fX, FLOAT32 fY, FL
 //   All image formats are supported. 
 //
 
-VN_STATUS vnAverageKernel( CONST CVImage & pSrcImage, FLOAT32 fX, FLOAT32 fY, BOOL bDirection, FLOAT32 fRadius, UINT8 * pRawOutput );
+VN_STATUS vnAverageKernel(CONST CVImage& pSrcImage, FLOAT32 fX, FLOAT32 fY, BOOL bDirection,
+                          FLOAT32 fRadius, UINT8* pRawOutput);
 
 #endif // __VN_IMAGE_AVERAGE_H__

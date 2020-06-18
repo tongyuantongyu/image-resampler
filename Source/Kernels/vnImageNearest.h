@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -57,6 +56,6 @@
 //   All image formats are supported. 
 //
 
-VN_STATUS vnNearestKernel( CONST CVImage & pSrcImage, FLOAT32 fX, FLOAT32 fY, UINT8 * pRawOutput );
+VN_STATUS vnNearestKernel(CONST CVImage& pSrcImage, FLOAT32 fX, FLOAT32 fY, UINT8* pRawOutput);
 
 #endif // __VN_IMAGE_NEAREST_H__

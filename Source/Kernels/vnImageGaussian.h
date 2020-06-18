@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -46,21 +45,20 @@
 //           d * ( 2 * Pi )
 //  
 
-inline FLOAT32 vnGaussianWeight( FLOAT32 fDistance, FLOAT32 fRadius )
-{
-    FLOAT32 fRange = fDistance / ( fRadius );
+inline FLOAT32 vnGaussianWeight(FLOAT32 fDistance, FLOAT32 fRadius) {
+	FLOAT32 fRange = fDistance / (fRadius);
 
-    //
-    // Gaussian function with mean = 0 and variance = 0.1.
-    //
+	//
+	// Gaussian function with mean = 0 and variance = 0.1.
+	//
 
-    static CONST FLOAT32 g_variance = 0.1f;
-    static CONST FLOAT32 g_stddev   = sqrt( g_variance );
-    static CONST FLOAT32 g_coeff    = 1.0f / ( g_stddev * sqrt( 2.0 * VN_PI ) );
-    
-    return g_coeff * exp( -1.0f * ( fRange * fRange ) / ( 2.0 * g_variance ) );
+	static CONST FLOAT32 g_variance = 0.1f;
+	static CONST FLOAT32 g_stddev = sqrt(g_variance);
+	static CONST FLOAT32 g_coeff = 1.0f / (g_stddev * sqrt(2.0 * VN_PI));
+
+	return g_coeff * exp(-1.0f * (fRange * fRange) / (2.0 * g_variance));
 }
- 
+
 //
 // Gaussian Kernel
 //
@@ -84,7 +82,8 @@ inline FLOAT32 vnGaussianWeight( FLOAT32 fDistance, FLOAT32 fRadius )
 //   All image formats are supported. 
 //
 
-VN_STATUS vnGaussianKernel( CONST CVImage & pSrcImage, FLOAT32 fX, FLOAT32 fY, FLOAT32 fRadius, UINT8 * pRawOutput );
+VN_STATUS vnGaussianKernel(CONST CVImage& pSrcImage, FLOAT32 fX, FLOAT32 fY, FLOAT32 fRadius,
+                           UINT8* pRawOutput);
 
 //
 // Gaussian Kernel
@@ -115,6 +114,7 @@ VN_STATUS vnGaussianKernel( CONST CVImage & pSrcImage, FLOAT32 fX, FLOAT32 fY, F
 //   All image formats are supported. 
 //
 
-VN_STATUS vnGaussianKernel( CONST CVImage & pSrcImage, FLOAT32 fX, FLOAT32 fY, BOOL bDirection, FLOAT32 fRadius, UINT8 * pRawOutput );
+VN_STATUS vnGaussianKernel(CONST CVImage& pSrcImage, FLOAT32 fX, FLOAT32 fY, BOOL bDirection,
+                           FLOAT32 fRadius, UINT8* pRawOutput);
 
 #endif // __VN_IMAGE_GAUSSIAN_H__

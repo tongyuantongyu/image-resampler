@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -67,11 +66,16 @@
 //   All image formats are supported. 
 //
 
-VN_STATUS vnResizeImage( CONST CVImage & pSrcImage, 
-                         VN_IMAGE_KERNEL_TYPE uiKernel, 
-                         UINT32 uiWidth, 
-                         UINT32 uiHeight, 
-                         VN_IMAGE_RESIZE_PARAMETERS uiFlags, 
-                         CVImage * pDestImage );
+VN_STATUS vnResizeImage(CONST CVImage& pSrcImage,
+                        VN_IMAGE_KERNEL_TYPE uiKernel,
+                        UINT32 uiWidth,
+                        UINT32 uiHeight,
+                        VN_IMAGE_RESIZE_PARAMETERS uiFlags,
+                        CVImage* pDestImage);
+
+VN_STATUS vnResizeImageNoAlloc(CONST CVImage& pSrcImage,
+                               VN_IMAGE_KERNEL_TYPE uiKernel,
+                               VN_IMAGE_RESIZE_PARAMETERS uiFlags,
+                               CVImage& pDestImage);
 
 #endif // __VN_IMAGE_RESIZE_H__

@@ -1,4 +1,3 @@
-
 //
 // Copyright (c) 2002-2009 Joe Bertolami. All Right Reserved.
 //
@@ -51,23 +50,21 @@
 // in a very simple manner.
 //
 
-typedef struct VN_PIXEL_BLOCK
-{
-    //
-    // This structure deliberately sheds the notion of the image format.
-    // Pixel blocks represent a common normalized pixel format that is 
-    // restricted to 32 bit channel formats.
-    //
+typedef struct VN_PIXEL_BLOCK {
+	//
+	// This structure deliberately sheds the notion of the image format.
+	// Pixel blocks represent a common normalized pixel format that is 
+	// restricted to 32 bit channel formats.
+	//
 
-    union
-    {
-        FLOAT64 fChannelData[4];            
-        INT64   iChannelData[4];       
-        UINT8   uiChannelBytes[32];
-    };
+	union {
+		FLOAT64 fChannelData[4];
+		INT64 iChannelData[4];
+		UINT8 uiChannelBytes[32];
+	};
 
-    VN_IMAGE_PRECISION  uiPrecision;
-    UINT8               uiChannelCount;
+	VN_IMAGE_PRECISION uiPrecision;
+	UINT8 uiChannelCount;
 
 } VN_PIXEL_BLOCK;
 
@@ -110,9 +107,11 @@ typedef struct VN_PIXEL_BLOCK
 // source block precision.
 //
 
-VN_STATUS vnConvertToBlock( UINT8 * pRawPixel, VN_IMAGE_FORMAT internalFormat, VN_PIXEL_BLOCK * pOutBlock );
+VN_STATUS vnConvertToBlock(UINT8* pRawPixel, VN_IMAGE_FORMAT internalFormat,
+                           VN_PIXEL_BLOCK* pOutBlock);
 
-VN_STATUS vnConvertFromBlock( CONST VN_PIXEL_BLOCK & pSourceBlock, VN_IMAGE_FORMAT format, UINT8 * pRawPixel );
+VN_STATUS vnConvertFromBlock(CONST VN_PIXEL_BLOCK& pSourceBlock, VN_IMAGE_FORMAT format,
+                             UINT8* pRawPixel);
 
 //
 // vnConvertBlock
@@ -120,6 +119,7 @@ VN_STATUS vnConvertFromBlock( CONST VN_PIXEL_BLOCK & pSourceBlock, VN_IMAGE_FORM
 // Performs a block conversion based on a destination format.
 //
 
-VN_STATUS vnConvertBlock( CONST VN_PIXEL_BLOCK & pSrc, VN_IMAGE_FORMAT destFormat, VN_PIXEL_BLOCK * pDest );
+VN_STATUS vnConvertBlock(CONST VN_PIXEL_BLOCK& pSrc, VN_IMAGE_FORMAT destFormat,
+                         VN_PIXEL_BLOCK* pDest);
 
 #endif // __VN_IMAGE_BLOCK_H__
