@@ -9,6 +9,7 @@ CVImage::CVImage() {
 	m_uiStrideLength = 0;
 	m_pbyDataBuffer = 0;
 	m_uiDataCapacity = 0;
+	m_uiIsExternalMemory = false;
 }
 
 CVImage::~CVImage() { if (VN_FAILED(Deallocate())) { vnPostError(VN_ERROR_EXECUTION_FAILURE); } }
@@ -34,7 +35,9 @@ VN_STATUS CVImage::Allocate(UINT32 uiSize) {
 }
 
 VN_STATUS CVImage::Deallocate() {
-	delete [] m_pbyDataBuffer;
+	if (!m_uiIsExternalMemory) {
+		delete [] m_pbyDataBuffer;
+	}
 
 	m_pbyDataBuffer = 0;
 	m_uiDataCapacity = 0;
@@ -175,12 +178,17 @@ VN_STATUS vnImportImage(Bitmap* bitmap, CVImage* pOutImage) {
 		return vnPostError(VN_ERROR_INVALIDARG);
 	}
 
+	if (VN_FAILED((pOutImage)->SetFormat( format ))) {
+		return vnPostError(VN_ERROR_EXECUTION_FAILURE);
+	}
+
 	if (VN_FAILED((pOutImage)->JustSetDimension( bitmap->Width, bitmap->Height ))) {
 		return vnPostError(VN_ERROR_EXECUTION_FAILURE);
 	}
 
 	pOutImage->m_uiStrideLength = bitmap->Stride;
 	pOutImage->m_pbyDataBuffer = bitmap->Scan0;
+	pOutImage->m_uiIsExternalMemory = true;
 
 	pOutImage->m_uiDataCapacity = bitmap->Stride * bitmap->Height;
 	

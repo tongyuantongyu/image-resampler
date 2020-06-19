@@ -69,6 +69,7 @@ private:
 	UINT8 m_uiChannelCount;
 	UINT8* m_pbyDataBuffer;
 	UINT32 m_uiDataCapacity;
+	bool m_uiIsExternalMemory;
 
 private:
 
